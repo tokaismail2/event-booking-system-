@@ -28,6 +28,14 @@ const isAdmin = (req, res, next) => {
   } else {
     return res.status(403).json({ message: 'Access denied, admin only' });
   }
+}
+
+  const isUser = (req, res, next) => {
+  if (req.user && req.user.role === 'user') {
+    return next();
+  } else {
+    return res.status(403).json({ message: 'Access denied, user only' });
+  }
 };
 
-module.exports = { authenticateUser, isAdmin };
+module.exports = { authenticateUser, isAdmin ,isUser};

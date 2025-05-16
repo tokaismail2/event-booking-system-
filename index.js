@@ -36,10 +36,13 @@ if (process.env.NODE_ENV === "development") {
 // Routes using
 const adminRoutes = require("./routes/adminRoutes");
 const userRoute = require("./routes/userRoutes");
+const bookingRoute = require("./routes/bookingRoute");
 // Routes import
 app.use(express.json()); // parsing JSON
-app.use('/api/users' , userRoute )
+app.use('/api/users' , userRoute );
 app.use('/api/admin', adminRoutes);
+app.use('/api/bookings', bookingRoute);
+
 
 
 
