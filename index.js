@@ -17,11 +17,17 @@ const app = express();
 
 
 // Middlewares - before routes
-app.use(cors({
-    origin: `${process.env.ENDPOINT_AUTH}`, 
-    credentials: true //for cookies
-}));
-
+// app.use(cors({
+//     origin: `${process.env.ENDPOINT_AUTH}`, 
+//     credentials: true //for cookies
+// }));
+app.use(
+    cors({
+        origin: '*',
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
+    })
+);
 
 app.use(bodyParser.json());
 if (process.env.NODE_ENV === "development") {

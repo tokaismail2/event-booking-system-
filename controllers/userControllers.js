@@ -9,18 +9,16 @@ require("dotenv").config();
 const crypto = require('crypto'); //hashing reset code
 const { sendEmail } = require('../utils/sendEmail'); //send email
 
+const Event = require('../models/eventsModel'); 
 
 
 //register
 const register = async (req, res, next) => {
     try {
-        const { name, email, password,confirmPassword ,role} = req.body;
+        const { name, email, password ,role} = req.body;
 
-        if (!name || !email || !password || !confirmPassword || !role) {
+        if (!name || !email || !password  || !role) {
             return next(new ApiError("All fields are required", responseTypes.BAD_REQUEST.code));
-        }
-        if (password !== confirmPassword) {
-            return next(new ApiError("Passwords do not match", responseTypes.BAD_REQUEST.code));
         }
         const findEmail = await User.findOne({ 'email.emailAddress': email });
         if (findEmail) {
@@ -189,6 +187,15 @@ const updatePassword = async (req, res, next) => {
     }
 };
 
+//user can see all events
+const getEvents = async (req, res, next) => {
+  try {
+    const events = await Event.find();
+    return responseWrapper(res, responseTypes.SUCCESS, 'Events fetched successfully', events);
+  } catch (error) {
+    return next(new ApiError(error.message, responseTypes.SERVER_ERROR.code));
+  }
+};
 
 
-module.exports = { register, login ,forgetPassword ,verifyResetCode ,updatePassword};
+module.exports = { register, login ,forgetPassword ,verifyResetCode ,updatePassword,getEvents};

@@ -18,15 +18,7 @@ const createEvent = async (req, res, next) => {
   }
 };
 
-//get all events
-const getEvents = async (req, res, next) => {
-  try {
-    const events = await Event.find();
-    return responseWrapper(res, responseTypes.SUCCESS, 'Events fetched successfully', events);
-  } catch (error) {
-    return next(new ApiError(error.message, responseTypes.SERVER_ERROR.code));
-  }
-};
+
 
 //update by id
 const updateEvent = async (req, res, next) => {
@@ -54,4 +46,4 @@ const deleteEvent = async (req, res, next) => {
   }
 };
 
-module.exports = { createEvent, getEvents, updateEvent, deleteEvent };
+module.exports = { createEvent, updateEvent, deleteEvent };
